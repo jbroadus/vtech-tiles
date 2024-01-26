@@ -1,11 +1,11 @@
-// Base tile bounds (not including extruded text).
-tile_size = [40, 37, 10.5];
+// Base tile (not including extruded text).
+tile_size = [41, 36, 10.5];
 // Key cutout box size.
 key_area_size = [24.5, 4, 6.5];
 // Individual key size.
-key_size = [2, 4, 6.5];
+key_size = [1.8, 4, 6.5];
 // Radius of circle used for minkowski function.
-radius = 11;
+radius = 10;
 
 // Text
 font = "Cantarell Bold";
@@ -56,7 +56,7 @@ tile_9 =  [[1,1,1,0,1,1], "9"];
 tile_10 = [[1,1,1,1,1,1], "10"];
 
 // This variable can be set on the command line.
-which_tile=tile_j;
+which_tile=tile_10;
 
 // Build the tile.
 tile(which_tile);
@@ -87,8 +87,9 @@ module tile_2d() {
 
 module tile_3d(txt) {
     union() {
-        linear_extrude(height=tile_size[2])
-            tile_2d();
+        scale=1.03;
+        translate([0, tile_size[1]*scale]) linear_extrude(height=tile_size[2], scale=[1,scale])
+            translate([0, -tile_size[1]]) tile_2d();
         translate([0,tile_size[1]/2,tile_size[2]])
             linear_extrude(height=text_depth)
                 minkowski() {
